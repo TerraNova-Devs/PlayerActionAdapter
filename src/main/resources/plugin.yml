@@ -1,0 +1,6 @@
+name: PlayerActionAdapter
+version: '1.0.0'
+main: de.mcterranova.playerActionAdapter.PlayerActionAdapter
+api-version: '1.21.4'
+authors: [ Bastizeit ]
+depend: [ TerranovaLib ]
