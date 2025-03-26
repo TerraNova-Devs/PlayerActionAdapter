@@ -130,6 +130,7 @@ public class ObjectiveManager {
                 // We'll just check if the word "POTION" is in the name.
                 return actualObject.toUpperCase().contains("POTION");
             }
+
             case "ANY_ITEM" -> {
                 // This means anything matches
                 return true;

@@ -16,6 +16,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.FurnaceExtractEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.ItemStack;
@@ -153,7 +154,28 @@ public class GrindListener implements Listener {
     }
 
     // ------------------------------------------------------------------------
-    // 7) BREEDING => BREED
+    // 7) TRADING => TRADE
+    // ------------------------------------------------------------------------
+    @EventHandler
+    public void onTrade(InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player player)) {
+            return;
+        }
+        if (event.getInventory().getType() != InventoryType.MERCHANT) {
+            return;
+        }
+        if (event.getSlotType() != InventoryType.SlotType.RESULT) {
+            return;
+        }
+        ItemStack tradeResult = event.getCurrentItem();
+        if (tradeResult == null || tradeResult.getType() == Material.AIR) {
+            return;
+        }
+        ObjectiveManager.handleEvent(player, "TRADE", tradeResult.getType().name(), tradeResult.getAmount());
+    }
+
+    // ------------------------------------------------------------------------
+    // 8) BREEDING => BREED
     // ------------------------------------------------------------------------
     @EventHandler
     public void onEntityBreed(EntityBreedEvent event) {
