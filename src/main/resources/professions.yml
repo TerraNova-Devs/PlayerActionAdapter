@@ -111,7 +111,7 @@ professions:
     objectives:
       - objectiveId: "mining_1_stone"
         action: "DESTROY"
-        object: "STONE"
+        object: "ANY_STONE"
         amount: 8000
       - objectiveId: "mining_1_coal"
         action: "DESTROY"
@@ -306,7 +306,7 @@ professions:
         description: "Verschiedenste Pflanzenarten auf weitläufigen Feldern."
       - buildingId: "farming_4_3"
         name: "Kleine Viehhaltung"
-        description: "Optionale Stallungen für Hühner, Kühe o. Ä."
+        description: "Optionale Stallungen für Hühner, Kühe o.ä.."
 
     objectives:
       - objectiveId: "farming_4_crops"
@@ -460,10 +460,6 @@ professions:
         action: "BREW"
         object: "ANY_POTION"
         amount: 10000
-      - objectiveId: "brewing_2_fire_res"
-        action: "BREW"
-        object: "POTION_FIRE_RESISTANCE"
-        amount: 200
 
   - professionId: "brewing_3"
     type: "BREWING"
@@ -486,10 +482,6 @@ professions:
         action: "BREW"
         object: "ANY_POTION"
         amount: 25000
-      - objectiveId: "brewing_3_night_vision"
-        action: "BREW"
-        object: "POTION_NIGHT_VISION"
-        amount: 500
 
   - professionId: "brewing_4"
     type: "BREWING"
@@ -512,14 +504,6 @@ professions:
         action: "BREW"
         object: "ANY_POTION"
         amount: 60000
-      - objectiveId: "brewing_4_invisibility"
-        action: "BREW"
-        object: "POTION_INVISIBILITY"
-        amount: 500
-      - objectiveId: "brewing_4_levitation"
-        action: "BREW"
-        object: "POTION_LEVITATION"
-        amount: 300
 
 
   ############################################################################
@@ -580,7 +564,7 @@ professions:
         description: "Großes Gebäude mit Schmelzöfen, Lagerraum. Kooperation mit Bergbau naheliegend."
       - buildingId: "smithing_3_2"
         name: "Werkstatt für besondere Legierungen"
-        description: "Z. B. Stahlveredelung, Netherite-Verarbeitung."
+        description: "z.B. Stahlveredelung, Netherite-Verarbeitung."
 
     objectives:
       - objectiveId: "smithing_3_tools"
@@ -655,13 +639,13 @@ professions:
         description: "Mind. 15 Bücherregale + kleine Bibliothek."
       - buildingId: "magic_2_2"
         name: "Verzauberungslabor"
-        description: "Bereich für Experimente und höherstufige Verzauberungen (Stufe 3+)."
+        description: "Bereich für Experimente und höherstufige Verzauberungen."
 
     objectives:
       - objectiveId: "magic_2_enchants"
         action: "ENCHANT"
         object: "ANY_ITEM"
-        amount: 5000
+        amount: 6000
 
   - professionId: "magic_3"
     type: "MAGIC"
@@ -677,13 +661,13 @@ professions:
         description: "Mit Turm oder Magierschule, umfangreiche Büchersammlung."
       - buildingId: "magic_3_2"
         name: "Ritualraum für höhere Verzauberungen"
-        description: "Ermöglicht Level‑4‑Verzauberungen oder spezielle Rituale."
+        description: "Großer Raum für mächtige Verzauberungen und Zauberrituale."
 
     objectives:
       - objectiveId: "magic_3_enchants"
         action: "ENCHANT"
         object: "ANY_ITEM"
-        amount: 8000
+        amount: 12000
 
   - professionId: "magic_4"
     type: "MAGIC"
@@ -695,17 +679,17 @@ professions:
 
     buildings:
       - buildingId: "magic_4_1"
-        name: "Magierturm oder Akademie"
+        name: "Akademie"
         description: "Großes Gebäude mit Ritualsälen und mächtigen Zauberstationen."
       - buildingId: "magic_4_2"
         name: "Große Bibliothek oder Zauber-Archiv"
-        description: "Zugang zu höchsten Stufen der Verzauberung (Level 5)."
+        description: "Umfangreiche Büchersammlung."
 
     objectives:
       - objectiveId: "magic_4_enchants"
         action: "ENCHANT"
         object: "ANY_ITEM"
-        amount: 10000
+        amount: 25000
 
 
   ############################################################################
@@ -902,7 +886,7 @@ professions:
     objectives:
       - objectiveId: "stonework_1_stone"
         action: "DESTROY"
-        object: "STONE"
+        object: "ANY_STONE"
         amount: 10000
 
   - professionId: "stonework_2"
@@ -924,7 +908,7 @@ professions:
     objectives:
       - objectiveId: "stonework_2_stone"
         action: "DESTROY"
-        object: "STONE"
+        object: "ANY_STONE"
         amount: 25000
 
   - professionId: "stonework_3"
@@ -949,7 +933,7 @@ professions:
     objectives:
       - objectiveId: "stonework_3_stone"
         action: "DESTROY"
-        object: "STONE"
+        object: "ANY_STONE"
         amount: 50000
 
   - professionId: "stonework_4"
@@ -974,5 +958,5 @@ professions:
     objectives:
       - objectiveId: "stonework_4_stone"
         action: "DESTROY"
-        object: "STONE"
+        object: "ANY_STONE"
         amount: 200000

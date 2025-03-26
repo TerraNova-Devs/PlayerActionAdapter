@@ -9,9 +9,9 @@ import java.util.*;
 
 public class ObjectiveManager {
 
-    // ---------------------------------------------
-    // Beispielhafte Sets für Sammelbegriffe
-    // ---------------------------------------------
+    // ------------------------------------------------------------------------
+    // Example sets for grouped blocks/items/entities
+    // ------------------------------------------------------------------------
     private static final Set<String> ANY_LOGS = Set.of(
             "OAK_LOG", "BIRCH_LOG", "ACACIA_LOG", "SPRUCE_LOG",
             "DARK_OAK_LOG", "JUNGLE_LOG", "MANGROVE_LOG",
@@ -19,7 +19,8 @@ public class ObjectiveManager {
     );
 
     private static final Set<String> ANY_STONES = Set.of(
-            "STONE", "GRANITE", "DIORITE", "ANDESITE", "BLACKSTONE", "DEEPSLATE", "TUFF", "CALCITE"
+            "STONE", "GRANITE", "DIORITE", "ANDESITE", "BLACKSTONE",
+            "DEEPSLATE", "TUFF", "CALCITE"
     );
 
     private static final Set<String> ANY_FISHES = Set.of(
@@ -47,26 +48,41 @@ public class ObjectiveManager {
             EntityType.COW, EntityType.SHEEP, EntityType.PIG,
             EntityType.CHICKEN, EntityType.HORSE, EntityType.RABBIT,
             EntityType.DONKEY, EntityType.MULE
-            // etc.
+            // etc. Add more if desired
     );
 
-    /**
-     * Wird vom Listener aufgerufen, wenn eine Aktion passiert (z.B. DESTROY, KILL, FISH, etc.)
-     * @param player        Der Spieler, der die Aktion ausführt
-     * @param action        Aktion (DESTROY / KILL / FISH / ...), wie in config definiert
-     * @param actualObject  z.B. "COAL_ORE", "ZOMBIE", "OAK_LOG", "DIAMOND_SWORD", ...
-     * @param amount        Wie viel wurde zerstört/gefarmt/gefischt/...
-     */
+    private static final Set<String> IRON_TOOL = Set.of(
+            "IRON_PICKAXE", "IRON_AXE", "IRON_SHOVEL", "IRON_HOE", "IRON_SWORD"
+    );
+
+    // For “DIAMOND_TOOL” references in config
+    private static final Set<String> DIAMOND_TOOL = Set.of(
+            "DIAMOND_PICKAXE", "DIAMOND_AXE", "DIAMOND_SHOVEL",
+            "DIAMOND_HOE", "DIAMOND_SWORD"
+    );
+
+    // For “NETHERITE_TOOL” references in config
+    private static final Set<String> NETHERITE_TOOL = Set.of(
+            "NETHERITE_PICKAXE", "NETHERITE_AXE", "NETHERITE_SHOVEL",
+            "NETHERITE_HOE", "NETHERITE_SWORD"
+    );
+
+    // ------------------------------------------------------------------------
+    // Called by listeners to register an action that a player did
+    // ------------------------------------------------------------------------
     public static void handleEvent(Player player, String action, String actualObject, long amount) {
-        // Settlement ermitteln
+        // Identify which settlement the player is in (hypothetical method)
         UUID settlementId = NationsHelper.getMembersTown(player.getUniqueId());
         if (settlementId == null) {
-            return;
+            return; // not in any settlement => skip
         }
-        // Liste aller Objectives für die aktive Profession
-        List<ObjectiveConfig> objectives = ProfessionManager.getObjectivesForProfession(SettlementProfessionRelationDAO.getActiveProfessionID(settlementId.toString()));
 
-        // Filter: Gleiche Action? Und Objekt passt (exakt oder per Sammelbegriff)?
+        // Get the active profession for that settlement from your DB
+        String professionId = SettlementProfessionRelationDAO.getActiveProfessionID(settlementId.toString());
+        // Then get the list of objective config entries for that profession
+        List<ObjectiveConfig> objectives = ProfessionManager.getObjectivesForProfession(professionId);
+
+        // Filter: correct action & object matches => increment progress
         objectives.stream()
                 .filter(o -> o.action.equalsIgnoreCase(action))
                 .filter(o -> matchesObject(o.object, actualObject))
@@ -76,50 +92,63 @@ public class ObjectiveManager {
                 });
     }
 
-    // -------------------------------------------------------------------------
-    // matchesObject: Prüft, ob "COAL_ORE" zu "COAL_ORE" (exakt) oder "ANY_ORE" (Kategorie) passt
-    // -------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
+    // Matches "actualObject" (e.g. "COAL_ORE", "ZOMBIE", "POTION_FIRE_RESISTANCE")
+    // against "object" in config (e.g. "ANY_ORE", "HOSTILE_MOB", "ANY_POTION", etc.)
+    // ------------------------------------------------------------------------
     private static boolean matchesObject(String configObject, String actualObject) {
-        // 1) Exakte Übereinstimmung
+        // 1) Direct string match
         if (configObject.equalsIgnoreCase(actualObject)) {
             return true;
         }
 
-        // 2) Sammelbegriffe (Strings)
+        // 2) String-based categories
         switch (configObject.toUpperCase()) {
-            case "ANY_LOG":
+            case "ANY_LOG" -> {
                 return ANY_LOGS.contains(actualObject.toUpperCase());
-
-            case "ANY_STONE":
+            }
+            case "ANY_STONE" -> {
                 return ANY_STONES.contains(actualObject.toUpperCase());
-
-            case "ANY_FISH":
+            }
+            case "ANY_FISH" -> {
                 return ANY_FISHES.contains(actualObject.toUpperCase());
-
-            case "ANY_CROP":
+            }
+            case "ANY_CROP" -> {
                 return ANY_CROPS.contains(actualObject.toUpperCase());
-
-            // case "ANY_ORE":
-            //     return ANY_ORES.contains(actualObject.toUpperCase());
+            }
+            case "IRON_TOOL" -> {
+                return IRON_TOOL.contains(actualObject.toUpperCase());
+            }
+            case "DIAMOND_TOOL" -> {
+                return DIAMOND_TOOL.contains(actualObject.toUpperCase());
+            }
+            case "NETHERITE_TOOL" -> {
+                return NETHERITE_TOOL.contains(actualObject.toUpperCase());
+            }
+            case "ANY_POTION" -> {
+                // e.g. "POTION_FIRE_RESISTANCE", "SPLASH_POTION_NIGHT_VISION", etc.
+                // We'll just check if the word "POTION" is in the name.
+                return actualObject.toUpperCase().contains("POTION");
+            }
+            case "ANY_ITEM" -> {
+                // This means anything matches
+                return true;
+            }
         }
 
-        // 3) Sammelbegriffe (Mobs)
+        // 3) Entity-based categories
         switch (configObject.toUpperCase()) {
             case "HOSTILE_MOB" -> {
-                EntityType eTypeHostile = parseEntityType(actualObject);
-                if (eTypeHostile != null) {
-                    return HOSTILE_MOBS.contains(eTypeHostile);
-                }
+                EntityType eType = parseEntityType(actualObject);
+                return eType != null && HOSTILE_MOBS.contains(eType);
             }
             case "ANY_ANIMAL" -> {
-                EntityType eTypeAnimal = parseEntityType(actualObject);
-                if (eTypeAnimal != null) {
-                    return ANY_ANIMALS.contains(eTypeAnimal);
-                }
+                EntityType eType = parseEntityType(actualObject);
+                return eType != null && ANY_ANIMALS.contains(eType);
             }
         }
 
-        // Nichts passt => false
+        // No match => false
         return false;
     }
 
@@ -127,7 +156,7 @@ public class ObjectiveManager {
         try {
             return EntityType.valueOf(raw.toUpperCase());
         } catch (IllegalArgumentException ex) {
-            return null;
+            return null; // not an entity
         }
     }
 }
