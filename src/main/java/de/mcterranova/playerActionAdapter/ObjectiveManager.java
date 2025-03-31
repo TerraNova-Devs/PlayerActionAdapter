@@ -20,7 +20,7 @@ public class ObjectiveManager {
 
     private static final Set<String> ANY_STONES = Set.of(
             "STONE", "GRANITE", "DIORITE", "ANDESITE", "BLACKSTONE",
-            "DEEPSLATE", "TUFF", "CALCITE"
+            "DEEPSLATE", "TUFF", "CALCITE", "SANDSTONE", "RED_SANDSTONE"
     );
 
     private static final Set<String> ANY_FISHES = Set.of(
@@ -65,6 +65,15 @@ public class ObjectiveManager {
     private static final Set<String> NETHERITE_TOOL = Set.of(
             "NETHERITE_PICKAXE", "NETHERITE_AXE", "NETHERITE_SHOVEL",
             "NETHERITE_HOE", "NETHERITE_SWORD"
+    );
+
+    private static final Set<String> ANY_TOOL = Set.of(
+            "WOODEN_PICKAXE", "WOODEN_AXE", "WOODEN_SHOVEL", "WOODEN_HOE", "WOODEN_SWORD",
+            "STONE_PICKAXE", "STONE_AXE", "STONE_SHOVEL", "STONE_HOE", "STONE_SWORD",
+            "GOLDEN_PICKAXE", "GOLDEN_AXE", "GOLDEN_SHOVEL", "GOLDEN_HOE", "GOLDEN_SWORD",
+            "IRON_PICKAXE", "IRON_AXE", "IRON_SHOVEL", "IRON_HOE", "IRON_SWORD",
+            "DIAMOND_PICKAXE", "DIAMOND_AXE", "DIAMOND_SHOVEL", "DIAMOND_HOE", "DIAMOND_SWORD",
+            "NETHERITE_PICKAXE", "NETHERITE_AXE", "NETHERITE_SHOVEL", "NETHERITE_HOE", "NETHERITE_SWORD"
     );
 
     // ------------------------------------------------------------------------

@@ -235,6 +235,27 @@ public class GrindListener implements Listener {
         ObjectiveManager.handleEvent(player, "BREW", potionKey, amount);
     }
 
+    // ------------------------------------------------------------------------
+    // Repairing
+    // ------------------------------------------------------------------------
+    @EventHandler
+    public void onRepairItem(InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player player)) {
+            return;
+        }
+        if (event.getInventory().getType() != InventoryType.ANVIL) {
+            return;
+        }
+        if (event.getSlotType() != InventoryType.SlotType.RESULT) {
+            return;
+        }
+        ItemStack repairedItem = event.getCurrentItem();
+        if (repairedItem == null || repairedItem.getType() == Material.AIR) {
+            return;
+        }
+        ObjectiveManager.handleEvent(player, "REPAIR", repairedItem.getType().name(), 1);
+    }
+
     /**
      * Attempt to build a string like:
      *   "POTION_FIRE_RESISTANCE"

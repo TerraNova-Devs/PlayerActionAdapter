@@ -7,20 +7,10 @@ import de.mcterranova.playerActionAdapter.pojo.ProfessionsYaml;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.LoaderOptions;
-import org.yaml.snakeyaml.TypeDescription;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-import org.yaml.snakeyaml.nodes.Tag;
-import org.yaml.snakeyaml.representer.Representer;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
 public final class PlayerActionAdapter extends JavaPlugin {
