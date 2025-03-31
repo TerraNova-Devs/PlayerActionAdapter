@@ -10,8 +10,8 @@ import java.sql.SQLException;
 public class SettlementProfessionRelationDAO {
 
     private static final String SELECT_ACTIVE_STATUS = """
-       SELECT ProfessionID FROM settlement_profession_relation
-       WHERE RUUID=? AND Status='ACTIVE'
+       SELECT `ProfessionID` FROM settlement_profession_relation
+       WHERE `RUUID`=? AND `Status`='ACTIVE'
     """;
 
     /**

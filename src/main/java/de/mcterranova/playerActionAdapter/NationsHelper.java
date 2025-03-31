@@ -15,7 +15,7 @@ public class NationsHelper {
     private static final Map<String, String> queries = new HashMap<>();
 
     static {
-        queries.put("getHome", "SELECT * FROM `access` WHERE `PUUID` = ? AND access = ? or access = ? or access = ? or access = ?;");
+        queries.put("getHome", "SELECT * FROM `access` WHERE `PUUID` = ? AND (access = ? or access = ? or access = ? or access = ?);");
     }
 
     public static UUID getMembersTown(UUID playerUUID) {

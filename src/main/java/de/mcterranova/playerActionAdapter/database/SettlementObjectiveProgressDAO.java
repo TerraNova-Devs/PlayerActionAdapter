@@ -10,14 +10,14 @@ import java.sql.SQLException;
 public class SettlementObjectiveProgressDAO {
 
     private static final String UPSERT = """
-       INSERT INTO settlement_objective_progress (RUUID, ObjectiveID, Progress)
+       INSERT INTO settlement_objective_progress (`RUUID`, `ObjectiveID`, `Progress`)
        VALUES (?, ?, ?)
-       ON DUPLICATE KEY UPDATE Progress=VALUES(Progress)
+       ON DUPLICATE KEY UPDATE `Progress`=VALUES(Progress)
     """;
 
     private static final String SELECT_PROGRESS = """
-       SELECT Progress FROM settlement_objective_progress
-       WHERE RUUID=? AND ObjectiveID=?;
+       SELECT `Progress` FROM settlement_objective_progress
+       WHERE `RUUID`=? AND `ObjectiveID`=?;
     """;
 
     /**
