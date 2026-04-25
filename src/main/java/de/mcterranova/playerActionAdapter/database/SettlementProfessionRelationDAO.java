@@ -30,4 +30,26 @@ public class SettlementProfessionRelationDAO {
         }
         return null;
     }
+
+    private static final String EXISTS_ACTIVE_STATUS = """
+       SELECT 1 FROM settlement_profession_relation
+       WHERE `RUUID`=? AND `Status`='ACTIVE'
+       LIMIT 1
+    """;
+
+    public static boolean hasActiveProfession(String ruuid) {
+        try (Connection con = PlayerActionAdapter.hikari.dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(EXISTS_ACTIVE_STATUS)) {
+
+            ps.setString(1, ruuid);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

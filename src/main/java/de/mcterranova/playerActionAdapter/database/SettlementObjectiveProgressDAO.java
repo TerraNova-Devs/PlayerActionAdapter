@@ -25,12 +25,18 @@ public class SettlementObjectiveProgressDAO {
      * (anstatt nur +1 wie in addProgress).
      */
     public static void setProgress(String ruuid, String objectiveId, long newProgress) {
+        if (!SettlementProfessionRelationDAO.hasActiveProfession(ruuid)) {
+            return;
+        }
+
         try (Connection con = PlayerActionAdapter.hikari.dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(UPSERT)) {
+
             ps.setString(1, ruuid);
             ps.setString(2, objectiveId);
             ps.setLong(3, newProgress);
             ps.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
